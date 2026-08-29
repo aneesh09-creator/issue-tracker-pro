@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { BugForm } from "@/components/BugForm";
 import { BugDetail } from "@/components/BugDetail";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import type { Id } from "@/convex/_generated/dataModel";
 
 const STATUS_COLUMNS = [
@@ -128,7 +129,9 @@ export default function Dashboard() {
     priorityFilter !== "all" || assigneeFilter !== "all" || search !== "";
 
   return (
-    <main className="min-h-screen bg-[#FAFAFA]">
+    <main className="min-h-screen bg-[#FAFAFA] relative">
+      <AnimatedBackground count={16} seed={77} />
+
       {/* Top Bar */}
       <header className="border-b-2 border-[#1A1A1A] px-6 py-3 bg-white">
         <div className="mx-auto max-w-full flex items-center justify-between gap-4">
@@ -156,7 +159,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-full px-6 py-6 space-y-5">
+      <div className="relative mx-auto max-w-full px-6 py-6 space-y-5">
         {/* Stats Row */}
         {stats && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-0">

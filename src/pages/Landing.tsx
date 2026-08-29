@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import {
   Bug,
   ArrowRight,
@@ -51,7 +52,9 @@ export default function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] text-[#1A1A1A]">
+    <div className="min-h-screen bg-[#FAFAFA] text-[#1A1A1A] relative">
+      <AnimatedBackground count={22} seed={42} />
+
       {/* Nav */}
       <nav className="border-b-2 border-[#1A1A1A] px-6 py-4">
         <div className="mx-auto max-w-6xl flex items-center justify-between">
@@ -183,7 +186,7 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t-2 border-[#1A1A1A] px-6 py-6">
+      <footer className="relative border-t-2 border-[#1A1A1A] px-6 py-6">
         <div className="mx-auto max-w-6xl flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bug className="size-4" />

@@ -1,13 +1,15 @@
 import { useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Bug, ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4">
-      <div className="text-center">
+    <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4 relative">
+      <AnimatedBackground count={12} seed={33} />
+      <div className="text-center relative">
         <div className="nb-shadow bg-[#FFE066] inline-block p-4 mb-6">
           <Bug className="size-10" />
         </div>

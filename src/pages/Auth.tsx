@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/input-otp";
 
 import { useAuth } from "@/hooks/use-auth";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Bug, ArrowRight, Loader2, Mail, UserX } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
@@ -109,7 +110,9 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
+    <div className="min-h-screen bg-[#FAFAFA] flex flex-col relative">
+      <AnimatedBackground count={14} seed={99} />
+
       {/* Top bar */}
       <nav className="border-b-2 border-[#1A1A1A] px-6 py-4 bg-white">
         <div className="mx-auto max-w-6xl flex items-center gap-2">
