@@ -45,37 +45,37 @@
 /* CHANGE VALUES FOR THEME */
 :root {
   --radius: 0px;
-  --background: #FAFAFA;
-  --foreground: #1A1A1A;
-  --card: #FFFFFF;
-  --card-foreground: #1A1A1A;
-  --popover: #FFFFFF;
-  --popover-foreground: #1A1A1A;
-  --primary: #1A1A1A;
-  --primary-foreground: #FAFAFA;
-  --secondary: #F0F0F0;
-  --secondary-foreground: #1A1A1A;
-  --muted: #F0F0F0;
-  --muted-foreground: #666666;
+  --background: #0a0a12;
+  --foreground: #e8e8f0;
+  --card: rgba(20, 20, 35, 0.85);
+  --card-foreground: #e8e8f0;
+  --popover: rgba(20, 20, 35, 0.95);
+  --popover-foreground: #e8e8f0;
+  --primary: #e8e8f0;
+  --primary-foreground: #0a0a12;
+  --secondary: rgba(255,255,255,0.08);
+  --secondary-foreground: #e8e8f0;
+  --muted: rgba(255,255,255,0.06);
+  --muted-foreground: #8888aa;
   --accent: #FFE066;
-  --accent-foreground: #1A1A1A;
+  --accent-foreground: #0a0a12;
   --destructive: #FF4444;
-  --border: #1A1A1A;
-  --input: #1A1A1A;
-  --ring: #1A1A1A;
+  --border: rgba(255,255,255,0.12);
+  --input: rgba(255,255,255,0.1);
+  --ring: rgba(255,224,102,0.4);
   --chart-1: #FFE066;
   --chart-2: #7FFF7F;
   --chart-3: #7FBFFF;
   --chart-4: #FF9F7F;
   --chart-5: #DF7FFF;
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #1A1A1A;
-  --sidebar-primary: #1A1A1A;
-  --sidebar-primary-foreground: #FAFAFA;
-  --sidebar-accent: #FFE066;
-  --sidebar-accent-foreground: #1A1A1A;
-  --sidebar-border: #1A1A1A;
-  --sidebar-ring: #1A1A1A;
+  --sidebar: rgba(20, 20, 35, 0.9);
+  --sidebar-foreground: #e8e8f0;
+  --sidebar-primary: #FFE066;
+  --sidebar-primary-foreground: #0a0a12;
+  --sidebar-accent: rgba(255,224,102,0.15);
+  --sidebar-accent-foreground: #FFE066;
+  --sidebar-border: rgba(255,255,255,0.1);
+  --sidebar-ring: rgba(255,224,102,0.4);
 }
 
 .dark {
@@ -127,70 +127,84 @@
 
 /* Neobrutalism utility classes */
 .nb-shadow {
-  box-shadow: 4px 4px 0px 0px #1A1A1A;
+  box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.15);
 }
 .nb-shadow-sm {
-  box-shadow: 2px 2px 0px 0px #1A1A1A;
+  box-shadow: 2px 2px 0px 0px rgba(255,255,255,0.12);
 }
 .nb-border {
-  border: 2px solid #1A1A1A;
+  border: 2px solid rgba(255,255,255,0.15);
 }
 .nb-card {
-  border: 2px solid #1A1A1A;
-  box-shadow: 4px 4px 0px 0px #1A1A1A;
+  border: 2px solid rgba(255,255,255,0.15);
+  box-shadow: 4px 4px 0px 0px rgba(255,255,255,0.08);
 }
 .nb-input {
-  border: 2px solid #1A1A1A;
-  box-shadow: 2px 2px 0px 0px #1A1A1A;
+  border: 2px solid rgba(255,255,255,0.15);
+  box-shadow: 2px 2px 0px 0px rgba(255,255,255,0.08);
 }
 .nb-input:focus {
-  box-shadow: 3px 3px 0px 0px #1A1A1A;
+  box-shadow: 3px 3px 0px 0px rgba(255,224,102,0.25);
 }
 .nb-btn {
-  border: 2px solid #1A1A1A;
-  box-shadow: 3px 3px 0px 0px #1A1A1A;
+  border: 2px solid rgba(255,255,255,0.2);
+  box-shadow: 3px 3px 0px 0px rgba(255,255,255,0.1);
   transition: box-shadow 0.15s, transform 0.15s;
 }
 .nb-btn:hover {
-  box-shadow: 2px 2px 0px 0px #1A1A1A;
+  box-shadow: 2px 2px 0px 0px rgba(255,255,255,0.15);
   transform: translate(1px, 1px);
 }
 .nb-btn:active {
-  box-shadow: 0px 0px 0px 0px #1A1A1A;
+  box-shadow: 0px 0px 0px 0px rgba(255,255,255,0.1);
   transform: translate(3px, 3px);
 }
 
 /* ================================================================
-   Premium background animations
+   Premium background animations — deep cinematic theme
    ================================================================ */
+
+/* ---- Deep background base ------------------------------------ */
+.nb-bg-base {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(30, 25, 50, 0.9) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(20, 30, 50, 0.8) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(25, 20, 40, 0.7) 0%, transparent 50%),
+    linear-gradient(180deg, #0a0a12 0%, #0d0d1a 40%, #0f0f20 70%, #0a0a12 100%);
+}
 
 /* ---- Ambient gradient orbs ------------------------------------ */
 @keyframes nb-orb-drift-1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  25%      { transform: translate(40px, -30px) scale(1.05); }
-  50%      { transform: translate(-20px, 20px) scale(0.97); }
-  75%      { transform: translate(30px, 10px) scale(1.02); }
+  25%      { transform: translate(50px, -35px) scale(1.06); }
+  50%      { transform: translate(-25px, 25px) scale(0.96); }
+  75%      { transform: translate(35px, 12px) scale(1.03); }
 }
 @keyframes nb-orb-drift-2 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  33%      { transform: translate(-50px, 25px) scale(1.04); }
-  66%      { transform: translate(30px, -40px) scale(0.96); }
+  33%      { transform: translate(-60px, 30px) scale(1.05); }
+  66%      { transform: translate(35px, -45px) scale(0.95); }
 }
 @keyframes nb-orb-drift-3 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  20%      { transform: translate(25px, 35px) scale(1.03); }
-  60%      { transform: translate(-35px, -15px) scale(0.98); }
-  80%      { transform: translate(10px, -25px) scale(1.01); }
+  20%      { transform: translate(30px, 40px) scale(1.04); }
+  60%      { transform: translate(-40px, -18px) scale(0.97); }
+  80%      { transform: translate(12px, -28px) scale(1.02); }
 }
 @keyframes nb-orb-drift-4 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  30%      { transform: translate(-30px, -20px) scale(1.03); }
-  70%      { transform: translate(20px, 30px) scale(0.97); }
+  30%      { transform: translate(-35px, -25px) scale(1.04); }
+  70%      { transform: translate(25px, 35px) scale(0.96); }
 }
 @keyframes nb-orb-drift-5 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  40%      { transform: translate(15px, -35px) scale(1.02); }
-  80%      { transform: translate(-25px, 15px) scale(0.98); }
+  40%      { transform: translate(18px, -40px) scale(1.03); }
+  80%      { transform: translate(-30px, 18px) scale(0.97); }
+}
+@keyframes nb-orb-drift-6 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  35%      { transform: translate(-20px, 20px) scale(1.02); }
+  65%      { transform: translate(15px, -15px) scale(0.98); }
 }
 
 .nb-orbs-layer {
@@ -201,105 +215,111 @@
 .nb-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(90px);
+  filter: blur(100px);
   will-change: transform;
 }
 
 .nb-orb-1 {
-  width: 500px;
-  height: 500px;
-  top: -10%;
-  left: 15%;
-  background: radial-gradient(circle, rgba(255,224,102,0.09) 0%, transparent 70%);
-  animation: nb-orb-drift-1 30s ease-in-out infinite;
+  width: 600px;
+  height: 600px;
+  top: -15%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(255,224,102,0.12) 0%, transparent 70%);
+  animation: nb-orb-drift-1 32s ease-in-out infinite;
 }
 
 .nb-orb-2 {
-  width: 420px;
-  height: 420px;
-  top: 40%;
-  right: -5%;
-  background: radial-gradient(circle, rgba(127,191,255,0.07) 0%, transparent 70%);
-  animation: nb-orb-drift-2 36s ease-in-out infinite;
+  width: 500px;
+  height: 500px;
+  top: 35%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(127,191,255,0.10) 0%, transparent 70%);
+  animation: nb-orb-drift-2 38s ease-in-out infinite;
 }
 
 .nb-orb-3 {
-  width: 360px;
-  height: 360px;
-  bottom: -5%;
-  left: 40%;
-  background: radial-gradient(circle, rgba(127,255,127,0.06) 0%, transparent 70%);
-  animation: nb-orb-drift-3 28s ease-in-out infinite;
+  width: 450px;
+  height: 450px;
+  bottom: -8%;
+  left: 35%;
+  background: radial-gradient(circle, rgba(127,255,127,0.08) 0%, transparent 70%);
+  animation: nb-orb-drift-3 30s ease-in-out infinite;
 }
 
 .nb-orb-4 {
-  width: 300px;
-  height: 300px;
-  top: 25%;
-  left: 60%;
-  background: radial-gradient(circle, rgba(255,159,127,0.06) 0%, transparent 70%);
-  animation: nb-orb-drift-4 34s ease-in-out infinite;
-  filter: blur(80px);
+  width: 380px;
+  height: 380px;
+  top: 20%;
+  left: 55%;
+  background: radial-gradient(circle, rgba(255,159,127,0.09) 0%, transparent 70%);
+  animation: nb-orb-drift-4 36s ease-in-out infinite;
+  filter: blur(90px);
 }
 
 .nb-orb-5 {
-  width: 280px;
-  height: 280px;
-  bottom: 20%;
-  left: 5%;
-  background: radial-gradient(circle, rgba(223,127,255,0.05) 0%, transparent 70%);
-  animation: nb-orb-drift-5 32s ease-in-out infinite;
+  width: 350px;
+  height: 350px;
+  bottom: 15%;
+  left: 2%;
+  background: radial-gradient(circle, rgba(223,127,255,0.08) 0%, transparent 70%);
+  animation: nb-orb-drift-5 34s ease-in-out infinite;
+  filter: blur(90px);
+}
+
+.nb-orb-6 {
+  width: 300px;
+  height: 300px;
+  top: 60%;
+  right: 20%;
+  background: radial-gradient(circle, rgba(255,224,102,0.06) 0%, transparent 70%);
+  animation: nb-orb-drift-6 40s ease-in-out infinite;
   filter: blur(80px);
 }
 
-/* ---- Grid / circuit pattern ---- */
+/* ---- Moving perspective grid ---------------------------------- */
 .nb-grid-layer {
-  opacity: 1;
-  transition: opacity 0.4s ease;
+  opacity: 0.6;
+  transform: perspective(800px) rotateX(15deg);
+  transform-origin: center 70%;
 }
 
-/* ---- CSS floating particles ---------------------------------- */
-@keyframes nb-css-float {
-  0%, 100% { transform: translate(0, 0); }
-  25%      { transform: translate(6px, -10px); }
-  50%      { transform: translate(-4px, 5px); }
-  75%      { transform: translate(8px, 3px); }
+@keyframes nb-grid-drift-h {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(60px); }
+}
+@keyframes nb-grid-drift-v {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(60px); }
 }
 
-.nb-css-particles {
-  position: absolute;
-  inset: 0;
+.nb-grid-scroll-h {
+  animation: nb-grid-drift-h 45s linear infinite;
 }
-
-.nb-css-particle {
-  position: absolute;
-  border-radius: 50%;
-  background: #1A1A1A;
-  animation: nb-css-float linear infinite;
-  will-change: transform;
+.nb-grid-scroll-v {
+  animation: nb-grid-drift-v 50s linear infinite;
 }
 
 /* ---- Glowing node dots --------------------------------------- */
 @keyframes nb-node-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50%      { opacity: 0.8; transform: scale(1.6); }
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 0.9; transform: scale(2); }
 }
 
 .nb-glowing-node {
   position: absolute;
   border-radius: 50%;
-  animation: nb-node-pulse 6s ease-in-out infinite;
+  animation: nb-node-pulse 5s ease-in-out infinite;
   will-change: opacity, transform;
 }
 
 /* ---- Glow pulse accents -------------------------------------- */
 @keyframes nb-glow-breathe-1 {
-  0%, 100% { opacity: 0.025; transform: scale(1) translate(0, 0); }
-  50%      { opacity: 0.05; transform: scale(1.08) translate(10px, -5px); }
+  0%, 100% { opacity: 0.06; transform: scale(1) translate(0, 0); }
+  50%      { opacity: 0.12; transform: scale(1.1) translate(12px, -8px); }
 }
 @keyframes nb-glow-breathe-2 {
-  0%, 100% { opacity: 0.02; transform: scale(1) translate(0, 0); }
-  50%      { opacity: 0.04; transform: scale(1.06) translate(-8px, 6px); }
+  0%, 100% { opacity: 0.04; transform: scale(1) translate(0, 0); }
+  50%      { opacity: 0.08; transform: scale(1.08) translate(-10px, 8px); }
 }
 
 .nb-glow-layer {
@@ -314,42 +334,50 @@
 }
 
 .nb-glow-pulse-1 {
-  width: 500px;
-  height: 500px;
-  top: 15%;
-  left: 25%;
-  background: radial-gradient(circle, rgba(255,224,102,0.2) 0%, transparent 70%);
+  width: 550px;
+  height: 550px;
+  top: 10%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(255,224,102,0.25) 0%, transparent 70%);
   filter: blur(100px);
-  animation: nb-glow-breathe-1 14s ease-in-out infinite;
+  animation: nb-glow-breathe-1 16s ease-in-out infinite;
 }
 
 .nb-glow-pulse-2 {
-  width: 400px;
-  height: 400px;
-  top: 55%;
-  right: 10%;
-  background: radial-gradient(circle, rgba(127,191,255,0.15) 0%, transparent 70%);
+  width: 450px;
+  height: 450px;
+  top: 50%;
+  right: 8%;
+  background: radial-gradient(circle, rgba(127,191,255,0.20) 0%, transparent 70%);
   filter: blur(90px);
-  animation: nb-glow-breathe-2 18s ease-in-out infinite;
+  animation: nb-glow-breathe-2 20s ease-in-out infinite;
+}
+
+/* ---- Edge vignette for depth --------------------------------- */
+.nb-vignette {
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(5,5,12,0.5) 100%);
 }
 
 /* ---- Reduced motion: freeze everything ----------------------- */
 @media (prefers-reduced-motion: reduce) {
   .nb-orb,
   .nb-glow-pulse,
-  .nb-css-particle,
-  .nb-glowing-node {
+  .nb-glowing-node,
+  .nb-grid-scroll-h,
+  .nb-grid-scroll-v {
     animation: none !important;
   }
-  .nb-css-particle { opacity: 0 !important; }
   canvas { display: none; }
+  .nb-grid-layer { transform: none; opacity: 0.4; }
 }
 
 /* ---- Mobile: reduce complexity -------------------------------- */
 @media (max-width: 767px) {
   .nb-orb-4,
-  .nb-orb-5 { display: none; }
-  .nb-css-particle { opacity: 0 !important; }
-  .nb-glowing-node { animation-duration: 10s !important; }
+  .nb-orb-5,
+  .nb-orb-6 { display: none; }
+  .nb-glowing-node { animation-duration: 8s !important; }
   .nb-glow-pulse-2 { display: none; }
+  .nb-grid-layer { transform: perspective(800px) rotateX(8deg); opacity: 0.35; }
+  .nb-vignette { background: radial-gradient(ellipse at center, transparent 30%, rgba(5,5,12,0.6) 100%); }
 }

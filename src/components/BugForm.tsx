@@ -96,9 +96,9 @@ export function BugForm({ open, onOpenChange, editBug }: BugFormProps) {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="nb-card bg-white sm:max-w-[500px] p-0 gap-0 overflow-hidden">
+      <DialogContent className="nb-card bg-[#14142a]/95 backdrop-blur-md sm:max-w-[500px] p-0 gap-0 overflow-hidden text-white">
         <DialogHeader className="px-6 pt-6 pb-4 border-b-2 border-[#1A1A1A]">
-          <DialogTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5">
+          <DialogTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5 text-white">
             <div className="nb-shadow-sm bg-[#FFE066] p-1.5">
               <Plus className="size-4" />
             </div>
