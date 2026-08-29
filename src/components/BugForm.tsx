@@ -58,6 +58,11 @@ export function BugForm({ open, onOpenChange, editBug }: BugFormProps) {
     onOpenChange(nextOpen);
   };
 
+  const resolvedAssigneeId =
+    assigneeId && assigneeId !== "unassigned"
+      ? (assigneeId as Id<"users">)
+      : undefined;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
@@ -71,14 +76,14 @@ export function BugForm({ open, onOpenChange, editBug }: BugFormProps) {
           description: description.trim() || undefined,
           priority: priority as "low" | "medium" | "high" | "critical",
           status: status as "open" | "in_progress" | "resolved" | "closed",
-          assigneeId: (assigneeId || undefined) as Id<"users"> | undefined,
+          assigneeId: resolvedAssigneeId,
         });
       } else {
         await createBug({
           title: title.trim(),
           description: description.trim() || undefined,
           priority: priority as "low" | "medium" | "high" | "critical",
-          assigneeId: (assigneeId || undefined) as Id<"users"> | undefined,
+          assigneeId: resolvedAssigneeId,
         });
       }
       onOpenChange(false);
@@ -171,7 +176,7 @@ export function BugForm({ open, onOpenChange, editBug }: BugFormProps) {
                   <SelectValue placeholder="Unassigned" />
                 </SelectTrigger>
                 <SelectContent className="nb-card rounded-none">
-                  <SelectItem value="none">Unassigned</SelectItem>
+                  <SelectItem value="unassigned">Unassigned</SelectItem>
                   {users.map((user) => (
                     <SelectItem key={user.id} value={user.id}>
                       {user.name || user.email || "Anonymous"}

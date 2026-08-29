@@ -79,16 +79,11 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
     try {
       const formData = new FormData(event.currentTarget);
       await signIn("email-otp", formData);
-
-      console.log("signed in");
-
       navigate(redirect);
     } catch (error) {
       console.error("OTP verification error:", error);
-
       setError("The verification code you entered is incorrect.");
       setIsLoading(false);
-
       setOtp("");
     }
   };
@@ -134,7 +129,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
       {/* Auth Content */}
       <div className="flex-1 flex items-center justify-center px-4">
         <div className="flex items-center justify-center h-full flex-col">
-          <Card className="min-w-[360px] pb-0 nb-card bg-white border-0">
+          <Card className="min-w-[360px] pb-0 nb-card bg-white">
             {step === "signIn" ? (
               <>
                 <CardHeader className="text-center">
