@@ -130,27 +130,27 @@ export default function Dashboard() {
     priorityFilter !== "all" || assigneeFilter !== "all" || search !== "";
 
   return (
-    <main className="min-h-screen relative">
+    <main className="min-h-screen bg-[#FAFAFA] relative">
       <AnimatedBackground particleCount={40} />
 
       {/* Top Bar */}
-      <header className="relative z-10 border-b border-white/10 px-6 py-3 bg-black/30 backdrop-blur-md">
+      <header className="relative z-10 border-b-2 border-[#1A1A1A] px-6 py-3 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto max-w-full flex items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="nb-shadow-sm bg-[#FFE066] p-1.5">
               <Bug className="size-4" />
             </div>
-            <span className="text-lg font-bold tracking-tight uppercase hidden sm:block text-white">
+            <span className="text-lg font-bold tracking-tight uppercase hidden sm:block">
               BugHive
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-sm font-medium text-white/60 hidden md:block">
+            <span className="text-sm font-medium text-muted-foreground hidden md:block">
               {user?.name || user?.email || "Team Member"}
             </span>
             <Button
               variant="outline"
-              className="nb-btn rounded-none font-bold text-xs h-8 bg-white/10 text-white border-white/15 hover:bg-white/15"
+              className="nb-btn rounded-none font-bold text-xs h-8"
               onClick={handleSignOut}
             >
               <LogOut className="size-3" />
@@ -165,15 +165,15 @@ export default function Dashboard() {
         {stats && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-0">
             {[
-              { label: "Total", value: stats.total, color: "bg-white/20" },
+              { label: "Total", value: stats.total, color: "bg-white" },
               { label: "Open", value: stats.open, color: "bg-[#7FBFFF]" },
               { label: "In Progress", value: stats.inProgress, color: "bg-[#FFE066]" },
               { label: "Resolved", value: stats.resolved, color: "bg-[#7FFF7F]" },
               { label: "Critical", value: stats.critical, color: "bg-[#FF4444] text-white" },
               { label: "High", value: stats.high, color: "bg-[#FF9F7F]" },
             ].map((s) => (
-              <div key={s.label} className="nb-border p-3.5 bg-black/30 backdrop-blur-sm">
-                <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+              <div key={s.label} className="nb-border p-3.5 bg-white">
+                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                   {s.label}
                 </div>
                 <div className={`text-2xl font-bold mt-1.5 inline-block nb-shadow-sm px-2.5 py-0.5 tabular-nums ${s.color}`}>
@@ -186,7 +186,7 @@ export default function Dashboard() {
 
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-          <Button              className="nb-btn bg-[#FFE066] text-[#0a0a12] rounded-none font-bold border-[#FFE066] hover:bg-[#FFE066]/90"
+          <Button              className="nb-btn bg-[#1A1A1A] text-white rounded-none font-bold"
               onClick={() => {
                 setEditingBug(null);
                 setShowCreateForm(true);
@@ -249,14 +249,14 @@ export default function Dashboard() {
           <div className="flex border-2 border-[#1A1A1A]">                    <button
                       onClick={() => setViewMode("board")}
                       className={`px-3 py-1.5 text-xs font-bold uppercase ${
-                        viewMode === "board" ? "bg-white text-[#0a0a12]" : "bg-white/10 text-white"
+                        viewMode === "board" ? "bg-[#1A1A1A] text-white" : "bg-white"
                       }`}
             >
               Board
             </button>                    <button
                       onClick={() => setViewMode("list")}
-                      className={`px-3 py-1.5 text-xs font-bold uppercase border-l-2 border-white/15 ${
-                        viewMode === "list" ? "bg-white text-[#0a0a12]" : "bg-white/10 text-white"
+                      className={`px-3 py-1.5 text-xs font-bold uppercase border-l-2 border-[#1A1A1A] ${
+                        viewMode === "list" ? "bg-[#1A1A1A] text-white" : "bg-white"
                       }`}
             >
               List
@@ -268,10 +268,10 @@ export default function Dashboard() {
         {viewMode === "board" && (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-0">
             {STATUS_COLUMNS.map((col) => (
-              <div key={col.key} className="border-2 border-white/15">
-                <div className="px-4 py-3 border-b-2 border-white/15 flex items-center gap-2">
+              <div key={col.key} className="border-2 border-[#1A1A1A]">
+                <div className="px-4 py-3 border-b-2 border-[#1A1A1A] flex items-center gap-2">
                   {col.icon}
-                  <span className="font-bold text-sm uppercase tracking-wide text-white">
+                  <span className="font-bold text-sm uppercase tracking-wide">
                     {col.label}
                   </span>
                   <Badge
@@ -281,15 +281,15 @@ export default function Dashboard() {
                     {bugsByStatus[col.key]?.length ?? 0}
                   </Badge>
                 </div>
-                <div className="p-2 space-y-2 min-h-[120px] bg-black/20">
+                <div className="p-2 space-y-2 min-h-[120px] bg-[#F5F5F5]">
                   {(bugsByStatus[col.key] ?? []).map((bug) => (
                     <button
                       key={bug._id}
                       onClick={() => setSelectedBugId(bug._id)}
-                      className="nb-card bg-black/30 backdrop-blur-sm p-3.5 text-left w-full hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_0_rgba(255,255,255,0.1)] transition-all duration-150"
+                      className="nb-card bg-white p-3.5 text-left w-full hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_0_#1A1A1A] transition-all duration-150"
                     >
                       <div className="flex items-start justify-between gap-2 mb-1.5">
-                        <h4 className="text-sm font-bold leading-tight line-clamp-2 text-white">
+                        <h4 className="text-sm font-bold leading-tight line-clamp-2">
                           {bug.title}
                         </h4>
                       </div>
@@ -322,10 +322,10 @@ export default function Dashboard() {
 
         {/* List View */}
         {viewMode === "list" && (
-          <div className="nb-border bg-black/30 backdrop-blur-sm overflow-hidden">
+          <div className="nb-border bg-white overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b-2 border-white/15 bg-white/5">
+                <tr className="border-b-2 border-[#1A1A1A] bg-[#F0F0F0]">
                   <th className="px-4 py-2.5 text-left font-bold text-xs uppercase tracking-wider">
                     Title
                   </th>

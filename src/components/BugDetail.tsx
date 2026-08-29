@@ -120,7 +120,7 @@ export function BugDetail({ bugId, open, onOpenChange, onEdit }: BugDetailProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="nb-card bg-[#14142a]/95 backdrop-blur-md sm:max-w-[620px] p-0 gap-0 overflow-hidden max-h-[88vh] flex flex-col text-white">
+      <DialogContent className="nb-card bg-white sm:max-w-[620px] p-0 gap-0 overflow-hidden max-h-[88vh] flex flex-col">
         <DialogHeader className="px-6 pt-6 pb-5 border-b-2 border-[#1A1A1A]">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">

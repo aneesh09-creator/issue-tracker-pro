@@ -102,11 +102,11 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="min-h-screen bg-[#FAFAFA] flex flex-col relative">
       <AnimatedBackground particleCount={35} />
 
       {/* Top bar */}
-      <nav className="relative z-10 border-b border-white/10 px-6 py-4 bg-black/30 backdrop-blur-md">
+      <nav className="relative z-10 border-b-2 border-[#1A1A1A] px-6 py-4 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto max-w-6xl flex items-center gap-2.5">
           <div
             className="nb-shadow-sm bg-[#FFE066] p-2 cursor-pointer hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_0_#1A1A1A] transition-all"
@@ -126,19 +126,19 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
       {/* Auth Content */}
       <div className="relative z-10 flex-1 flex items-center justify-center px-4 py-12">
         <div className="flex items-center justify-center h-full flex-col">
-          <Card className="w-full max-w-[400px] pb-0 nb-card bg-black/40 backdrop-blur-md">
+          <Card className="w-full max-w-[400px] pb-0 nb-card bg-white">
             {step === "signIn" ? (
               <>
                 <CardHeader className="text-center pt-8 pb-6">
                   <div className="flex justify-center mb-5">
                     <div className="nb-shadow bg-[#FFE066] p-3.5">
-                      <Bug className="size-8 text-[#0a0a12]" />
+                      <Bug className="size-8" />
                     </div>
                   </div>
-                  <CardTitle className="text-2xl font-bold tracking-tight text-white">
+                  <CardTitle className="text-2xl font-bold tracking-tight">
                     Welcome to BugHive
                   </CardTitle>
-                  <CardDescription className="text-white/50 mt-1.5">
+                  <CardDescription className="text-muted-foreground mt-1.5">
                     Enter your email to get started
                   </CardDescription>
                 </CardHeader>
@@ -178,7 +178,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                           <span className="w-full border-t-2 border-[#1A1A1A]" />
                         </div>
                         <div className="relative flex justify-center text-xs uppercase">
-                          <span className="bg-black/40 px-3 text-white/50 font-bold tracking-wider">
+                          <span className="bg-white px-3 text-muted-foreground font-bold tracking-wider">
                             Or
                           </span>
                         </div>
@@ -201,10 +201,10 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
             ) : (
               <>
                 <CardHeader className="text-center pt-8 pb-4">
-                  <CardTitle className="text-xl font-bold text-white">Check your email</CardTitle>
-                  <CardDescription className="mt-1.5 text-white/50">
+                  <CardTitle className="text-xl font-bold">Check your email</CardTitle>
+                  <CardDescription className="mt-1.5">
                     We've sent a code to{" "}
-                    <span className="font-bold text-white">{step.email}</span>
+                    <span className="font-bold text-foreground">{step.email}</span>
                   </CardDescription>
                 </CardHeader>
                 <form onSubmit={handleOtpSubmit}>
