@@ -182,6 +182,16 @@
   60%      { transform: translate(-35px, -15px) scale(0.98); }
   80%      { transform: translate(10px, -25px) scale(1.01); }
 }
+@keyframes nb-orb-drift-4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  30%      { transform: translate(-30px, -20px) scale(1.03); }
+  70%      { transform: translate(20px, 30px) scale(0.97); }
+}
+@keyframes nb-orb-drift-5 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%      { transform: translate(15px, -35px) scale(1.02); }
+  80%      { transform: translate(-25px, 15px) scale(0.98); }
+}
 
 .nb-orbs-layer {
   position: absolute;
@@ -200,7 +210,7 @@
   height: 500px;
   top: -10%;
   left: 15%;
-  background: radial-gradient(circle, rgba(255,224,102,0.10) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,224,102,0.09) 0%, transparent 70%);
   animation: nb-orb-drift-1 30s ease-in-out infinite;
 }
 
@@ -209,7 +219,7 @@
   height: 420px;
   top: 40%;
   right: -5%;
-  background: radial-gradient(circle, rgba(127,191,255,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(127,191,255,0.07) 0%, transparent 70%);
   animation: nb-orb-drift-2 36s ease-in-out infinite;
 }
 
@@ -218,20 +228,78 @@
   height: 360px;
   bottom: -5%;
   left: 40%;
-  background: radial-gradient(circle, rgba(127,255,127,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(127,255,127,0.06) 0%, transparent 70%);
   animation: nb-orb-drift-3 28s ease-in-out infinite;
 }
 
-/* ---- Grid / circuit pattern fade on scroll ---- */
+.nb-orb-4 {
+  width: 300px;
+  height: 300px;
+  top: 25%;
+  left: 60%;
+  background: radial-gradient(circle, rgba(255,159,127,0.06) 0%, transparent 70%);
+  animation: nb-orb-drift-4 34s ease-in-out infinite;
+  filter: blur(80px);
+}
+
+.nb-orb-5 {
+  width: 280px;
+  height: 280px;
+  bottom: 20%;
+  left: 5%;
+  background: radial-gradient(circle, rgba(223,127,255,0.05) 0%, transparent 70%);
+  animation: nb-orb-drift-5 32s ease-in-out infinite;
+  filter: blur(80px);
+}
+
+/* ---- Grid / circuit pattern ---- */
 .nb-grid-layer {
   opacity: 1;
   transition: opacity 0.4s ease;
 }
 
-/* ---- Glow pulse accent ---------------------------------------- */
-@keyframes nb-glow-breathe {
-  0%, 100% { opacity: 0.03; transform: scale(1); }
-  50%      { opacity: 0.06; transform: scale(1.08); }
+/* ---- CSS floating particles ---------------------------------- */
+@keyframes nb-css-float {
+  0%, 100% { transform: translate(0, 0); }
+  25%      { transform: translate(6px, -10px); }
+  50%      { transform: translate(-4px, 5px); }
+  75%      { transform: translate(8px, 3px); }
+}
+
+.nb-css-particles {
+  position: absolute;
+  inset: 0;
+}
+
+.nb-css-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: #1A1A1A;
+  animation: nb-css-float linear infinite;
+  will-change: transform;
+}
+
+/* ---- Glowing node dots --------------------------------------- */
+@keyframes nb-node-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%      { opacity: 0.8; transform: scale(1.6); }
+}
+
+.nb-glowing-node {
+  position: absolute;
+  border-radius: 50%;
+  animation: nb-node-pulse 6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+/* ---- Glow pulse accents -------------------------------------- */
+@keyframes nb-glow-breathe-1 {
+  0%, 100% { opacity: 0.025; transform: scale(1) translate(0, 0); }
+  50%      { opacity: 0.05; transform: scale(1.08) translate(10px, -5px); }
+}
+@keyframes nb-glow-breathe-2 {
+  0%, 100% { opacity: 0.02; transform: scale(1) translate(0, 0); }
+  50%      { opacity: 0.04; transform: scale(1.06) translate(-8px, 6px); }
 }
 
 .nb-glow-layer {
@@ -241,25 +309,47 @@
 
 .nb-glow-pulse {
   position: absolute;
-  width: 600px;
-  height: 600px;
-  top: 20%;
-  left: 30%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,224,102,0.25) 0%, transparent 70%);
-  filter: blur(100px);
-  animation: nb-glow-breathe 12s ease-in-out infinite;
   will-change: opacity, transform;
 }
 
-/* ---- Reduced motion: freeze everything ------------------------ */
+.nb-glow-pulse-1 {
+  width: 500px;
+  height: 500px;
+  top: 15%;
+  left: 25%;
+  background: radial-gradient(circle, rgba(255,224,102,0.2) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: nb-glow-breathe-1 14s ease-in-out infinite;
+}
+
+.nb-glow-pulse-2 {
+  width: 400px;
+  height: 400px;
+  top: 55%;
+  right: 10%;
+  background: radial-gradient(circle, rgba(127,191,255,0.15) 0%, transparent 70%);
+  filter: blur(90px);
+  animation: nb-glow-breathe-2 18s ease-in-out infinite;
+}
+
+/* ---- Reduced motion: freeze everything ----------------------- */
 @media (prefers-reduced-motion: reduce) {
   .nb-orb,
-  .nb-glow-pulse {
+  .nb-glow-pulse,
+  .nb-css-particle,
+  .nb-glowing-node {
     animation: none !important;
   }
-  .nb-orb-1 { transform: translate(0, 0) scale(1); }
-  .nb-orb-2 { transform: translate(0, 0) scale(1); }
-  .nb-orb-3 { transform: translate(0, 0) scale(1); }
+  .nb-css-particle { opacity: 0 !important; }
   canvas { display: none; }
+}
+
+/* ---- Mobile: reduce complexity -------------------------------- */
+@media (max-width: 767px) {
+  .nb-orb-4,
+  .nb-orb-5 { display: none; }
+  .nb-css-particle { opacity: 0 !important; }
+  .nb-glowing-node { animation-duration: 10s !important; }
+  .nb-glow-pulse-2 { display: none; }
 }
