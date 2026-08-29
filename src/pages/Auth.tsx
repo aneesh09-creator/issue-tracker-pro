@@ -92,13 +92,10 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
     setIsLoading(true);
     setError(null);
     try {
-      console.log("Attempting anonymous sign in...");
       await signIn("anonymous");
-      console.log("Anonymous sign in successful");
       navigate(redirect);
     } catch (error) {
       console.error("Guest login error:", error);
-      console.error("Error details:", JSON.stringify(error, null, 2));
       setError(`Failed to sign in as guest: ${error instanceof Error ? error.message : 'Unknown error'}`);
       setIsLoading(false);
     }
@@ -109,10 +106,10 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
       <AnimatedBackground particleCount={35} />
 
       {/* Top bar */}
-      <nav className="border-b-2 border-[#1A1A1A] px-6 py-4 bg-white">
-        <div className="mx-auto max-w-6xl flex items-center gap-2">
+      <nav className="relative z-10 border-b-2 border-[#1A1A1A] px-6 py-4 bg-white/90 backdrop-blur-sm">
+        <div className="mx-auto max-w-6xl flex items-center gap-2.5">
           <div
-            className="nb-shadow-sm bg-[#FFE066] p-2 cursor-pointer"
+            className="nb-shadow-sm bg-[#FFE066] p-2 cursor-pointer hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_0_#1A1A1A] transition-all"
             onClick={() => navigate("/")}
           >
             <Bug className="size-4" />
@@ -127,41 +124,41 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
       </nav>
 
       {/* Auth Content */}
-      <div className="flex-1 flex items-center justify-center px-4">
+      <div className="relative z-10 flex-1 flex items-center justify-center px-4 py-12">
         <div className="flex items-center justify-center h-full flex-col">
-          <Card className="min-w-[360px] pb-0 nb-card bg-white">
+          <Card className="w-full max-w-[400px] pb-0 nb-card bg-white">
             {step === "signIn" ? (
               <>
-                <CardHeader className="text-center">
-                  <div className="flex justify-center mb-4">
-                    <div className="nb-shadow bg-[#FFE066] p-3">
+                <CardHeader className="text-center pt-8 pb-6">
+                  <div className="flex justify-center mb-5">
+                    <div className="nb-shadow bg-[#FFE066] p-3.5">
                       <Bug className="size-8" />
                     </div>
                   </div>
                   <CardTitle className="text-2xl font-bold tracking-tight">
                     Welcome to BugHive
                   </CardTitle>
-                  <CardDescription className="text-muted-foreground">
+                  <CardDescription className="text-muted-foreground mt-1.5">
                     Enter your email to get started
                   </CardDescription>
                 </CardHeader>
                 <form onSubmit={handleEmailSubmit}>
-                  <CardContent>
+                  <CardContent className="px-6 pb-6">
                     <div className="relative flex items-center gap-2">
                       <div className="relative flex-1">
-                        <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
                           name="email"
                           placeholder="name@example.com"
                           type="email"
-                          className="nb-input rounded-none pl-9 h-10"
+                          className="nb-input rounded-none pl-9 h-11"
                           disabled={isLoading}
                           required
                         />
                       </div>
                       <Button
                         type="submit"
-                        className="nb-btn bg-[#1A1A1A] text-white rounded-none h-10 w-10 font-bold"
+                        className="nb-btn bg-[#1A1A1A] text-white rounded-none h-11 w-11 font-bold shrink-0"
                         disabled={isLoading}
                       >
                         {isLoading ? (
@@ -172,10 +169,10 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                       </Button>
                     </div>
                     {error && (
-                      <p className="mt-2 text-sm text-[#FF4444] font-medium">{error}</p>
+                      <p className="mt-2.5 text-sm text-[#FF4444] font-medium">{error}</p>
                     )}
 
-                    <div className="mt-5">
+                    <div className="mt-6">
                       <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                           <span className="w-full border-t-2 border-[#1A1A1A]" />
@@ -190,7 +187,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                       <Button
                         type="button"
                         variant="outline"
-                        className="nb-btn w-full mt-4 rounded-none font-bold"
+                        className="nb-btn w-full mt-5 rounded-none font-bold h-11"
                         onClick={handleGuestLogin}
                         disabled={isLoading}
                       >
@@ -203,19 +200,19 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
               </>
             ) : (
               <>
-                <CardHeader className="text-center mt-4">
+                <CardHeader className="text-center pt-8 pb-4">
                   <CardTitle className="text-xl font-bold">Check your email</CardTitle>
-                  <CardDescription>
+                  <CardDescription className="mt-1.5">
                     We've sent a code to{" "}
                     <span className="font-bold text-foreground">{step.email}</span>
                   </CardDescription>
                 </CardHeader>
                 <form onSubmit={handleOtpSubmit}>
-                  <CardContent className="pb-4">
+                  <CardContent className="px-6 pb-4">
                     <input type="hidden" name="email" value={step.email} />
                     <input type="hidden" name="code" value={otp} />
 
-                    <div className="flex justify-center">
+                    <div className="flex justify-center py-2">
                       <InputOTP
                         value={otp}
                         onChange={setOtp}
@@ -235,7 +232,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                             <InputOTPSlot
                               key={index}
                               index={index}
-                              className="nb-input rounded-none size-12"
+                              className="nb-input rounded-none size-12 text-lg"
                             />
                           ))}
                         </InputOTPGroup>
@@ -246,21 +243,21 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                         {error}
                       </p>
                     )}
-                    <p className="text-sm text-muted-foreground text-center mt-4">
+                    <p className="text-sm text-muted-foreground text-center mt-5">
                       Didn't receive a code?{" "}
                       <Button
                         variant="link"
-                        className="p-0 h-auto font-bold"
+                        className="p-0 h-auto font-bold underline-offset-4"
                         onClick={() => setStep("signIn")}
                       >
                         Try again
                       </Button>
                     </p>
                   </CardContent>
-                  <CardFooter className="flex-col gap-2 pb-6">
+                  <CardFooter className="flex-col gap-2.5 px-6 pb-7 pt-2">
                     <Button
                       type="submit"
-                      className="nb-btn w-full bg-[#1A1A1A] text-white rounded-none font-bold"
+                      className="nb-btn w-full bg-[#1A1A1A] text-white rounded-none font-bold h-11"
                       disabled={isLoading || otp.length !== 6}
                     >
                       {isLoading ? (
@@ -280,7 +277,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
                       variant="ghost"
                       onClick={() => setStep("signIn")}
                       disabled={isLoading}
-                      className="w-full font-bold"
+                      className="w-full font-bold h-11"
                     >
                       Use different email
                     </Button>

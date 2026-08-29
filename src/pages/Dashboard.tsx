@@ -23,6 +23,7 @@ import {
   CheckCircle2,
   Archive,
   AlertTriangle,
+  Loader2,
   X,
 } from "lucide-react";
 import { BugForm } from "@/components/BugForm";
@@ -133,9 +134,9 @@ export default function Dashboard() {
       <AnimatedBackground particleCount={40} />
 
       {/* Top Bar */}
-      <header className="border-b-2 border-[#1A1A1A] px-6 py-3 bg-white">
+      <header className="relative z-10 border-b-2 border-[#1A1A1A] px-6 py-3 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto max-w-full flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <div className="nb-shadow-sm bg-[#FFE066] p-1.5">
               <Bug className="size-4" />
             </div>
@@ -143,13 +144,13 @@ export default function Dashboard() {
               BugHive
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground hidden md:block">
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-medium text-muted-foreground hidden md:block">
               {user?.name || user?.email || "Team Member"}
             </span>
             <Button
               variant="outline"
-              className="nb-btn rounded-none font-bold text-xs"
+              className="nb-btn rounded-none font-bold text-xs h-8"
               onClick={handleSignOut}
             >
               <LogOut className="size-3" />
@@ -159,7 +160,7 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div className="relative mx-auto max-w-full px-6 py-6 space-y-5">
+      <div className="relative z-10 mx-auto max-w-full px-6 py-6 space-y-5">
         {/* Stats Row */}
         {stats && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-0">
@@ -171,11 +172,11 @@ export default function Dashboard() {
               { label: "Critical", value: stats.critical, color: "bg-[#FF4444] text-white" },
               { label: "High", value: stats.high, color: "bg-[#FF9F7F]" },
             ].map((s) => (
-              <div key={s.label} className="nb-border p-3 bg-white">
+              <div key={s.label} className="nb-border p-3.5 bg-white">
                 <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                   {s.label}
                 </div>
-                <div className={`text-2xl font-bold mt-1 inline-block nb-shadow-sm px-2 ${s.color}`}>
+                <div className={`text-2xl font-bold mt-1.5 inline-block nb-shadow-sm px-2.5 py-0.5 tabular-nums ${s.color}`}>
                   {s.value}
                 </div>
               </div>
@@ -288,7 +289,7 @@ export default function Dashboard() {
                     <button
                       key={bug._id}
                       onClick={() => setSelectedBugId(bug._id)}
-                      className="nb-card bg-white p-3 text-left w-full hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_0_#1A1A1A] transition-all"
+                      className="nb-card bg-white p-3.5 text-left w-full hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_0_#1A1A1A] transition-all duration-150"
                     >
                       <div className="flex items-start justify-between gap-2 mb-1.5">
                         <h4 className="text-sm font-bold leading-tight line-clamp-2">
@@ -310,8 +311,10 @@ export default function Dashboard() {
                     </button>
                   ))}
                   {(bugsByStatus[col.key] ?? []).length === 0 && (
-                    <div className="text-xs text-muted-foreground text-center py-6 italic">
-                      No bugs
+                    <div className="text-xs text-muted-foreground text-center py-8">
+                      <div className="inline-block nb-border bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider">
+                        Empty
+                      </div>
                     </div>
                   )}
                 </div>
@@ -385,17 +388,24 @@ export default function Dashboard() {
                   <tr>
                     <td
                       colSpan={5}
-                      className="px-4 py-10 text-center text-muted-foreground italic"
+                      className="px-4 py-12 text-center text-muted-foreground"
                     >
                       {bugs === undefined ? (
-                        "Loading bugs..."
+                        <div className="flex items-center justify-center gap-2">
+                          <Loader2 className="size-4 animate-spin" />
+                          <span className="text-sm">Loading bugs...</span>
+                        </div>
                       ) : bugs.length === 0 ? (
-                        <div className="space-y-2">
-                          <AlertTriangle className="size-6 mx-auto" />
-                          <p>No bugs yet. Create your first one!</p>
+                        <div className="space-y-3">
+                          <AlertTriangle className="size-6 mx-auto text-muted-foreground/60" />
+                          <p className="text-sm font-medium">No bugs yet</p>
+                          <p className="text-xs">Create your first bug to get started.</p>
                         </div>
                       ) : (
-                        "No bugs match your filters."
+                        <div className="space-y-1">
+                          <p className="text-sm font-medium">No results found</p>
+                          <p className="text-xs">Try adjusting your filters or search query.</p>
+                        </div>
                       )}
                     </td>
                   </tr>

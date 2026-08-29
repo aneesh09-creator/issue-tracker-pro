@@ -98,14 +98,14 @@ export function BugForm({ open, onOpenChange, editBug }: BugFormProps) {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="nb-card bg-white sm:max-w-[500px] p-0 gap-0 overflow-hidden">
         <DialogHeader className="px-6 pt-6 pb-4 border-b-2 border-[#1A1A1A]">
-          <DialogTitle className="text-xl font-bold tracking-tight flex items-center gap-2">
+          <DialogTitle className="text-xl font-bold tracking-tight flex items-center gap-2.5">
             <div className="nb-shadow-sm bg-[#FFE066] p-1.5">
               <Plus className="size-4" />
             </div>
             {editBug ? "Edit Bug" : "New Bug"}
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
+        <form onSubmit={handleSubmit} className="px-6 py-6 space-y-5">
           <div className="space-y-2">
             <Label htmlFor="title" className="text-sm font-bold uppercase tracking-wide">
               Title *
@@ -115,7 +115,7 @@ export function BugForm({ open, onOpenChange, editBug }: BugFormProps) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Short, descriptive title"
-              className="nb-input rounded-none"
+              className="nb-input rounded-none h-11"
               required
             />
           </div>
@@ -129,7 +129,7 @@ export function BugForm({ open, onOpenChange, editBug }: BugFormProps) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Steps to reproduce, expected vs actual behavior..."
-              className="nb-input rounded-none min-h-[80px] resize-none"
+              className="nb-input rounded-none min-h-[88px] resize-none"
               rows={3}
             />
           </div>
@@ -187,18 +187,18 @@ export function BugForm({ open, onOpenChange, editBug }: BugFormProps) {
             </div>
           )}
 
-          <div className="flex gap-2 pt-2 pb-1">
+          <div className="flex gap-2.5 pt-3 pb-1">
             <Button
               type="button"
               variant="outline"
-              className="nb-btn rounded-none flex-1 font-bold"
+              className="nb-btn rounded-none flex-1 font-bold h-11"
               onClick={() => onOpenChange(false)}
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="nb-btn bg-[#1A1A1A] text-white rounded-none flex-1 font-bold hover:bg-[#333333]"
+              className="nb-btn bg-[#1A1A1A] text-white rounded-none flex-1 font-bold hover:bg-[#333333] h-11"
               disabled={isSubmitting || !title.trim()}
             >
               {isSubmitting ? (

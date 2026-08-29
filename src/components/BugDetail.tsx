@@ -120,8 +120,8 @@ export function BugDetail({ bugId, open, onOpenChange, onEdit }: BugDetailProps)
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="nb-card bg-white sm:max-w-[600px] p-0 gap-0 overflow-hidden max-h-[90vh] flex flex-col">
-        <DialogHeader className="px-6 pt-6 pb-4 border-b-2 border-[#1A1A1A]">
+      <DialogContent className="nb-card bg-white sm:max-w-[620px] p-0 gap-0 overflow-hidden max-h-[88vh] flex flex-col">
+        <DialogHeader className="px-6 pt-6 pb-5 border-b-2 border-[#1A1A1A]">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <DialogTitle className="text-xl font-bold tracking-tight leading-tight">
@@ -139,9 +139,9 @@ export function BugDetail({ bugId, open, onOpenChange, onEdit }: BugDetailProps)
           </div>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-5">
+        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
           {/* Controls */}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-wrap items-center">
             <Select value={bug.status} onValueChange={handleStatusChange}>
               <SelectTrigger className="nb-input rounded-none text-xs font-bold w-auto">
                 <SelectValue />
@@ -173,10 +173,10 @@ export function BugDetail({ bugId, open, onOpenChange, onEdit }: BugDetailProps)
             </Button>
             <Button
               variant="outline"
-              className="nb-btn rounded-none text-xs font-bold text-[#FF4444] hover:bg-[#FF4444] hover:text-white"
+              className="nb-btn rounded-none text-xs font-bold text-[#FF4444] hover:bg-[#FF4444] hover:text-white ml-auto"
               onClick={handleDelete}
             >
-              <Trash2 className="size-3" />
+              <Trash2 className="size-3" /> Delete
             </Button>
           </div>
 
@@ -186,14 +186,14 @@ export function BugDetail({ bugId, open, onOpenChange, onEdit }: BugDetailProps)
               <h4 className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
                 Description
               </h4>
-              <div className="nb-border p-3 text-sm leading-relaxed whitespace-pre-wrap">
+              <div className="nb-border p-4 text-sm leading-relaxed whitespace-pre-wrap">
                 {bug.description}
               </div>
             </div>
           )}
 
           {/* Meta info */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted-foreground">
                 <User className="size-3" /> Reporter
@@ -229,13 +229,13 @@ export function BugDetail({ bugId, open, onOpenChange, onEdit }: BugDetailProps)
           </div>
 
           {/* Comments */}
-          <div className="space-y-3">
+          <div className="space-y-3 pt-1">
             <h4 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-muted-foreground">
               <MessageSquare className="size-3" /> Comments ({bug.comments?.length ?? 0})
             </h4>
 
             {bug.comments && bug.comments.length > 0 && (
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {bug.comments.map((comment) => (
                   <div key={comment._id} className="nb-border p-3">
                     <div className="flex items-center justify-between mb-1.5">
@@ -275,7 +275,7 @@ export function BugDetail({ bugId, open, onOpenChange, onEdit }: BugDetailProps)
               />
               <Button
                 type="submit"
-                className="nb-btn bg-[#1A1A1A] text-white rounded-none font-bold text-sm"
+                className="nb-btn bg-[#1A1A1A] text-white rounded-none font-bold text-sm h-9"
                 disabled={isSubmittingComment || !commentText.trim()}
               >
                 {isSubmittingComment ? (
