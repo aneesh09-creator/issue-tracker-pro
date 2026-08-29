@@ -53,7 +53,7 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#1A1A1A] relative">
-      <AnimatedBackground count={22} seed={42} />
+      <AnimatedBackground particleCount={55} />
 
       {/* Nav */}
       <nav className="border-b-2 border-[#1A1A1A] px-6 py-4">

@@ -8,7 +8,7 @@ export default function NotFound() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center px-4 relative">
-      <AnimatedBackground count={12} seed={33} />
+      <AnimatedBackground particleCount={30} />
       <div className="text-center relative">
         <div className="nb-shadow bg-[#FFE066] inline-block p-4 mb-6">
           <Bug className="size-10" />

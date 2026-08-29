@@ -111,7 +111,7 @@ function Auth({ redirectAfterAuth }: AuthProps = {}) {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex flex-col relative">
-      <AnimatedBackground count={14} seed={99} />
+      <AnimatedBackground particleCount={35} />
 
       {/* Top bar */}
       <nav className="border-b-2 border-[#1A1A1A] px-6 py-4 bg-white">

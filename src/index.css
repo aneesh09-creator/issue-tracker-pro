@@ -160,44 +160,106 @@
   transform: translate(3px, 3px);
 }
 
-/* Floating animation for background shapes */
-@keyframes nb-float {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-18px) translateX(8px) rotate(5deg);
-  }
-  50% {
-    transform: translateY(-8px) translateX(-6px) rotate(-3deg);
-  }
-  75% {
-    transform: translateY(-22px) translateX(12px) rotate(4deg);
-  }
+/* ================================================================
+   Premium background animations
+   ================================================================ */
+
+/* ---- Ambient gradient orbs ------------------------------------ */
+@keyframes nb-orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25%      { transform: translate(40px, -30px) scale(1.05); }
+  50%      { transform: translate(-20px, 20px) scale(0.97); }
+  75%      { transform: translate(30px, 10px) scale(1.02); }
+}
+@keyframes nb-orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(-50px, 25px) scale(1.04); }
+  66%      { transform: translate(30px, -40px) scale(0.96); }
+}
+@keyframes nb-orb-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  20%      { transform: translate(25px, 35px) scale(1.03); }
+  60%      { transform: translate(-35px, -15px) scale(0.98); }
+  80%      { transform: translate(10px, -25px) scale(1.01); }
 }
 
-.nb-float {
-  animation: nb-float linear infinite;
+.nb-orbs-layer {
+  position: absolute;
+  inset: 0;
 }
 
-/* Gradient pulse for background accent */
-@keyframes nb-gradient-pulse {
-  0%, 100% {
-    transform: translate(0%, 0%) rotate(0deg);
-    background: conic-gradient(from 0deg, #FFE066, #7FBFFF, #7FFF7F, #FF9F7F, #DF7FFF, #FFE066);
-  }
-  33% {
-    transform: translate(5%, -3%) rotate(120deg);
-    background: conic-gradient(from 120deg, #7FBFFF, #7FFF7F, #FF9F7F, #DF7FFF, #FFE066, #7FBFFF);
-  }
-  66% {
-    transform: translate(-3%, 5%) rotate(240deg);
-    background: conic-gradient(from 240deg, #7FFF7F, #FF9F7F, #DF7FFF, #FFE066, #7FBFFF, #7FFF7F);
-  }
-}
-
-.nb-gradient-pulse {
-  animation: nb-gradient-pulse 25s ease-in-out infinite;
+.nb-orb {
+  position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.nb-orb-1 {
+  width: 500px;
+  height: 500px;
+  top: -10%;
+  left: 15%;
+  background: radial-gradient(circle, rgba(255,224,102,0.10) 0%, transparent 70%);
+  animation: nb-orb-drift-1 30s ease-in-out infinite;
+}
+
+.nb-orb-2 {
+  width: 420px;
+  height: 420px;
+  top: 40%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(127,191,255,0.08) 0%, transparent 70%);
+  animation: nb-orb-drift-2 36s ease-in-out infinite;
+}
+
+.nb-orb-3 {
+  width: 360px;
+  height: 360px;
+  bottom: -5%;
+  left: 40%;
+  background: radial-gradient(circle, rgba(127,255,127,0.07) 0%, transparent 70%);
+  animation: nb-orb-drift-3 28s ease-in-out infinite;
+}
+
+/* ---- Grid / circuit pattern fade on scroll ---- */
+.nb-grid-layer {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+/* ---- Glow pulse accent ---------------------------------------- */
+@keyframes nb-glow-breathe {
+  0%, 100% { opacity: 0.03; transform: scale(1); }
+  50%      { opacity: 0.06; transform: scale(1.08); }
+}
+
+.nb-glow-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.nb-glow-pulse {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: 20%;
+  left: 30%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,224,102,0.25) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: nb-glow-breathe 12s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+/* ---- Reduced motion: freeze everything ------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .nb-orb,
+  .nb-glow-pulse {
+    animation: none !important;
+  }
+  .nb-orb-1 { transform: translate(0, 0) scale(1); }
+  .nb-orb-2 { transform: translate(0, 0) scale(1); }
+  .nb-orb-3 { transform: translate(0, 0) scale(1); }
+  canvas { display: none; }
 }

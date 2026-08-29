@@ -130,7 +130,7 @@ export default function Dashboard() {
 
   return (
     <main className="min-h-screen bg-[#FAFAFA] relative">
-      <AnimatedBackground count={16} seed={77} />
+      <AnimatedBackground particleCount={40} />
 
       {/* Top Bar */}
       <header className="border-b-2 border-[#1A1A1A] px-6 py-3 bg-white">

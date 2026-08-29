@@ -1,167 +1,193 @@
-import { useMemo } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
-interface Shape {
-  id: number;
-  type: "square" | "circle" | "cross" | "triangle" | "ring" | "dot";
+/**
+ * Premium animated background with 5 layers:
+ *   1. Subtle radial gradient base
+ *   2. Drifting ambient gradient orbs
+ *   3. Faint grid / circuit pattern
+ *   4. Floating particles with connecting lines (canvas)
+ *   5. Soft glow pulse accents
+ *
+ * All layers are pointer-events:none, GPU-friendly, and respect
+ * prefers-reduced-motion.
+ */
+
+/* ------------------------------------------------------------------ */
+/*  Particle canvas — tiny drifting dots + faint connecting lines      */
+/* ------------------------------------------------------------------ */
+
+interface Particle {
   x: number;
   y: number;
-  size: number;
-  color: string;
-  duration: number;
-  delay: number;
-  rotation: number;
+  vx: number;
+  vy: number;
+  r: number;
+  opacity: number;
 }
 
-const COLORS = [
-  "#FFE066",
-  "#7FBFFF",
-  "#7FFF7F",
-  "#FF9F7F",
-  "#DF7FFF",
-  "#FFFFFF",
-];
-
-function generateShapes(count: number, seed: number): Shape[] {
-  const shapes: Shape[] = [];
-  const types: Shape["type"][] = ["square", "circle", "cross", "triangle", "ring", "dot"];
-
+function createParticles(w: number, h: number, count: number): Particle[] {
+  const particles: Particle[] = [];
   for (let i = 0; i < count; i++) {
-    // Simple seeded pseudo-random
-    const r = Math.sin(seed + i * 127.1) * 43758.5453;
-    const rand = r - Math.floor(r);
-    const r2 = Math.sin(seed + i * 269.5) * 43758.5453;
-    const rand2 = r2 - Math.floor(r2);
-    const r3 = Math.sin(seed + i * 419.2) * 43758.5453;
-    const rand3 = r3 - Math.floor(r3);
-
-    shapes.push({
-      id: i,
-      type: types[Math.floor(rand * types.length)],
-      x: rand2 * 100,
-      y: rand3 * 100,
-      size: 12 + rand * 36,
-      color: COLORS[Math.floor(rand * COLORS.length)],
-      duration: 18 + rand2 * 30,
-      delay: rand3 * -20,
-      rotation: rand * 360,
+    particles.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: 1 + Math.random() * 1.2,
+      opacity: 0.15 + Math.random() * 0.25,
     });
   }
-  return shapes;
+  return particles;
 }
 
-function ShapeSVG({ shape }: { shape: Shape }) {
-  const { type, size, color } = shape;
+function ParticleCanvas({ count = 50 }: { count?: number }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<Particle[]>([]);
+  const rafRef = useRef<number>(0);
+  const reducedMotion = useRef(false);
 
-  switch (type) {
-    case "square":
-      return (
-        <svg width={size} height={size} viewBox="0 0 40 40">
-          <rect
-            x="2"
-            y="2"
-            width="36"
-            height="36"
-            fill={color}
-            stroke="#1A1A1A"
-            strokeWidth="2.5"
-          />
-        </svg>
-      );
-    case "circle":
-      return (
-        <svg width={size} height={size} viewBox="0 0 40 40">
-          <circle
-            cx="20"
-            cy="20"
-            r="17"
-            fill={color}
-            stroke="#1A1A1A"
-            strokeWidth="2.5"
-          />
-        </svg>
-      );
-    case "cross":
-      return (
-        <svg width={size} height={size} viewBox="0 0 40 40">
-          <rect x="15" y="2" width="10" height="36" fill="#1A1A1A" />
-          <rect x="2" y="15" width="36" height="10" fill="#1A1A1A" />
-        </svg>
-      );
-    case "triangle":
-      return (
-        <svg width={size} height={size} viewBox="0 0 40 40">
-          <polygon
-            points="20,2 38,38 2,38"
-            fill={color}
-            stroke="#1A1A1A"
-            strokeWidth="2.5"
-          />
-        </svg>
-      );
-    case "ring":
-      return (
-        <svg width={size} height={size} viewBox="0 0 40 40">
-          <circle
-            cx="20"
-            cy="20"
-            r="16"
-            fill="none"
-            stroke="#1A1A1A"
-            strokeWidth="3"
-          />
-        </svg>
-      );
-    case "dot":
-      return (
-        <svg width={size * 0.4} height={size * 0.4} viewBox="0 0 16 16">
-          <circle cx="8" cy="8" r="6" fill="#1A1A1A" />
-        </svg>
-      );
-  }
-}
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-export function AnimatedBackground({
-  count = 18,
-  seed = 42,
-  className = "",
-}: {
-  count?: number;
-  seed?: number;
-  className?: string;
-}) {
-  const shapes = useMemo(() => generateShapes(count, seed), [count, seed]);
+    const { width: w, height: h } = canvas;
+    ctx.clearRect(0, 0, w, h);
+
+    const particles = particlesRef.current;
+    const connectionDist = 140;
+
+    /* update + draw particles */
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+
+      /* wrap around edges */
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      if (p.y < -10) p.y = h + 10;
+      if (p.y > h + 10) p.y = -10;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(26, 26, 26, ${p.opacity})`;
+      ctx.fill();
+    }
+
+    /* draw connections */
+    ctx.lineWidth = 0.6;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < connectionDist) {
+          const alpha = (1 - dist / connectionDist) * 0.08;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(26, 26, 26, ${alpha})`;
+          ctx.stroke();
+        }
+      }
+    }
+
+    rafRef.current = requestAnimationFrame(draw);
+  }, []);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotion.current = mql.matches;
+
+    const canvas = canvasRef.current;
+    if (!canvas || reducedMotion.current) return;
+
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement!.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+      const ctx = canvas.getContext("2d");
+      if (ctx) ctx.scale(dpr, dpr);
+
+      /* recalculate particle count based on viewport */
+      const area = rect.width * rect.height;
+      const targetCount = Math.min(Math.max(Math.floor(area / 18000), 25), count);
+      particlesRef.current = createParticles(rect.width, rect.height, targetCount);
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+    rafRef.current = requestAnimationFrame(draw);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [count, draw]);
 
   return (
-    <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
-      {shapes.map((shape) => (
-        <div
-          key={shape.id}
-          className="absolute nb-float"
-          style={{
-            left: `${shape.x}%`,
-            top: `${shape.y}%`,
-            animationDuration: `${shape.duration}s`,
-            animationDelay: `${shape.delay}s`,
-            transform: `rotate(${shape.rotation}deg)`,
-            opacity: 0.35,
-          }}
-        >
-          <ShapeSVG shape={shape} />
-        </div>
-      ))}
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full"
+      aria-hidden="true"
+    />
+  );
+}
 
-      {/* Animated grid lines */}
-      <svg className="absolute inset-0 w-full h-full opacity-[0.04]">
+/* ------------------------------------------------------------------ */
+/*  Main exported component                                            */
+/* ------------------------------------------------------------------ */
+
+export function AnimatedBackground({
+  particleCount = 50,
+  className = "",
+}: {
+  particleCount?: number;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
+      aria-hidden="true"
+    >
+      {/* Layer 1 — Soft radial gradient base */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,224,102,0.06)_0%,transparent_60%)]" />
+
+      {/* Layer 2 — Drifting ambient orbs */}
+      <div className="absolute inset-0 nb-orbs-layer">
+        <div className="nb-orb nb-orb-1" />
+        <div className="nb-orb nb-orb-2" />
+        <div className="nb-orb nb-orb-3" />
+      </div>
+
+      {/* Layer 3 — Subtle grid / circuit pattern */}
+      <svg className="absolute inset-0 w-full h-full nb-grid-layer" aria-hidden="true">
         <defs>
-          <pattern id="nb-grid" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1A1A1A" strokeWidth="1.5" />
+          <pattern id="nb-circuit" width="80" height="80" patternUnits="userSpaceOnUse">
+            <path
+              d="M 80 0 L 0 0 0 80"
+              fill="none"
+              stroke="rgba(26,26,26,0.04)"
+              strokeWidth="1"
+            />
+            <circle cx="0" cy="0" r="1.5" fill="rgba(26,26,26,0.06)" />
           </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#nb-grid)" />
+        <rect width="100%" height="100%" fill="url(#nb-circuit)" />
       </svg>
 
-      {/* Moving gradient accent */}
-      <div className="absolute -top-1/2 -left-1/4 w-[150%] h-[150%] nb-gradient-pulse opacity-[0.07]" />
+      {/* Layer 4 — Particle network (canvas) */}
+      <ParticleCanvas count={particleCount} />
+
+      {/* Layer 5 — Soft glow accent */}
+      <div className="absolute inset-0 nb-glow-layer">
+        <div className="nb-glow-pulse" />
+      </div>
     </div>
   );
 }
